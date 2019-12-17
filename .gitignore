@@ -1,0 +1,10 @@
+*.log*
+.cache
+.DS_Store
+.idea
+.vscode
+.history
+
+# npm
+node_modules
+package-lock.json
