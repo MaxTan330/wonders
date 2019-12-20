@@ -2,18 +2,21 @@
   "name": "wonders-tohtml",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/adm-zip": "^0.4.32",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
-    "adm-zip": "^0.4.13",
-    "eslint": "^6.7.2",
-    "typescript": "^3.7.3"
+    "@types/node": "^12.12.21",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-watch": "^5.0.1"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.13"
   }
 }

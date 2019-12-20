@@ -1,6 +1,6 @@
 import admZip from 'adm-zip';
 import fs from 'fs';
-const parser = async (absoluteWordPath: string) => {
+const parser = async (absoluteWordPath: string): Promise<Array<string>> => {
     let resultList: string[];
     return new Promise(resolve => {
         //如果文件存在

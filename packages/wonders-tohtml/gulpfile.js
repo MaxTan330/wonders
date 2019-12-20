@@ -14,11 +14,11 @@ const clean = () => {
 const wordtohtml = async done => {
     const wordPath = path.join(assetsPath, 'test.docx');
     //读取数据
-    const items = await parser(wordPath)
+    const items = await parser(wordPath);
     const htmlPath = path.join(assetsPath, 'word.template.html');
     src(htmlPath)
         .pipe(gulpTemplate({ items }))
-        .pipe(dest(buildPath))
+        .pipe(dest(buildPath));
     done && done();
 };
 

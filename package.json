@@ -1,19 +1,31 @@
 {
-  "name": "wonders",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MaxTan330/wonders.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MaxTan330/wonders/issues"
-  },
-  "homepage": "https://github.com/MaxTan330/wonders#readme"
+    "name": "wonders",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MaxTan330/wonders.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MaxTan330/wonders/issues"
+    },
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "homepage": "https://github.com/MaxTan330/wonders#readme",
+    "devDependencies": {
+        "@types/node": "^12.12.21",
+        "@typescript-eslint/eslint-plugin": "^2.12.0",
+        "@typescript-eslint/parser": "^2.12.0",
+        "eslint": "^6.7.2",
+        "lerna": "^3.19.0",
+        "typescript": "^3.7.3"
+    }
 }
