@@ -1,7 +1,7 @@
-import admZip from 'adm-zip';
-import fs from 'fs';
-const parser = async (absoluteWordPath: string): Promise<Array<string>> => {
-    let resultList: string[];
+import admZip = require('adm-zip');
+import * as fs from 'fs';
+const docxParser = async (absoluteWordPath: string): Promise<Array<string>> => {
+    const resultList: Array<string> = [];
     return new Promise(resolve => {
         //如果文件存在
         fs.exists(absoluteWordPath, exists => {
@@ -40,4 +40,4 @@ const parser = async (absoluteWordPath: string): Promise<Array<string>> => {
         });
     });
 };
-export { parser };
+export { docxParser };
