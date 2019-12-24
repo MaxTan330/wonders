@@ -2,10 +2,15 @@ import admZip = require('adm-zip');
 import * as fs from 'fs';
 const docxParser = async (absoluteWordPath: string): Promise<Array<string>> => {
     const resultList: Array<string> = [];
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         //如果文件存在
-        fs.exists(absoluteWordPath, exists => {
-            if (exists) {
+        fs.open(absoluteWordPath, 'r', err => {
+            if (err) {
+                if (err.code === 'ENOENT') {
+                    console.error(`${absoluteWordPath} 不存在`);
+                    reject();
+                }
+            } else {
                 //解压缩
                 const zip = new admZip(absoluteWordPath);
                 //将document.xml(解压缩后得到的文件)读取为text内容
@@ -34,8 +39,6 @@ const docxParser = async (absoluteWordPath: string): Promise<Array<string>> => {
                     //解析完成
                     resolve(resultList);
                 }
-            } else {
-                resolve(resultList);
             }
         });
     });

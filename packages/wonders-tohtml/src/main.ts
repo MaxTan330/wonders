@@ -3,32 +3,36 @@
  *  @author MaxTan
  *  @date 2019/12/20
  */
-import { src, dest } from 'gulp';
 import * as path from 'path';
-// import gulpReplace from 'gulp-replace';
-const gulpTemplate = require('gulp-template');
-const gulpClean = require('gulp-clean');
+import _ from 'lodash';
 import { docxParser } from './parser';
+import { readFile, writeFile, isDirectory, mkdir } from './utils';
 const buildPath = path.resolve(__dirname, '../build/');
 const assetsPath = path.join(__dirname, '../assets/');
-//清除构建目录
-const taskClean = () => {
-    return src(buildPath, { allowEmpty: true, read: false }).pipe(gulpClean({ force: true }));
-};
 interface WorkOptions {
     targetPath: string; //源文件路径
-    templatePath: string; //模板路径
+    templatePath?: string; //模板路径
+    isWirteFile?: boolean; //是否写入文件
 }
 //docxhtml转换成html
-const docxtohtml = async function(options?: WorkOptions) {
-    console.log(options);
-    const wordPath = path.join(assetsPath, 'test.docx');
-    const htmlPath = path.join(assetsPath, 'template/base.template.html');
-    const items = await docxParser(wordPath);
-    //读取数据
-    return src(htmlPath)
-        .pipe(gulpTemplate({ items }))
-        .pipe(dest(buildPath));
+const docxtohtml = async (options: WorkOptions) => {
+    let defaultOptions = {
+        targetPath: path.join(assetsPath, 'test.docx'),
+        templatePath: path.join(assetsPath, 'template/base.template.html'),
+        isWirteFile: true
+    };
+    defaultOptions = Object.assign(defaultOptions, options);
+    const items = await docxParser(defaultOptions.targetPath);
+    //读取模板文件
+    const htmlTemp = await readFile(defaultOptions.templatePath);
+    const compiled = _.template(htmlTemp);
+    //编译模板数据
+    const htmlStr = compiled({ items });
+    const buildFlag = await isDirectory(buildPath);
+    const writePath = path.join(buildPath, 'index.html');
+    const status = !buildFlag && (await mkdir(buildPath));
+    if (status && defaultOptions.isWirteFile) {
+        writeFile(writePath, htmlStr);
+    }
 };
-// series(taskClean,docxtohtml);
-export { taskClean, docxtohtml };
+export { docxtohtml };
