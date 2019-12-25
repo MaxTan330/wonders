@@ -17,7 +17,7 @@
         // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
         // "composite": true,                     /* Enable project compilation */
         // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
-        // "removeComments": true,                /* Do not emit comments to output. */
+        "removeComments": true,                /* Do not emit comments to output. */
         // "noEmit": true,                        /* Do not emit outputs. */
         // "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
         // "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
@@ -61,7 +61,7 @@
         // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
         "skipLibCheck": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
     },
     // "include": ["src/**/*"],
     "exclude": ["node_modules"]

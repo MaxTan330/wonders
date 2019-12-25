@@ -4,7 +4,7 @@
     "description": "tohtml",
     "main": "lib/main.js",
     "scripts": {
-        "tsc-dev": "tsc"
+        "tsst": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": "https://github.com/MaxTan330/wonders/tree/master/packages/tohtml",
     "keywords": [
@@ -15,8 +15,7 @@
     "devDependencies": {
         "@types/adm-zip": "^0.4.32",
         "@types/lodash": "^4.14.149",
-        "@types/node": "^12.12.21",
-        "rimraf": "^3.0.0"
+        "@types/node": "^12.12.21"
     },
     "bin": {
         "tohtml": "lib/cli.js"
@@ -28,5 +27,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "files": [
+        "lib"
+    ]
 }

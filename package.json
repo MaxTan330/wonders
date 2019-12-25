@@ -31,5 +31,8 @@
         "gulp-typescript": "^6.0.0-alpha.1",
         "lerna": "^3.19.0",
         "typescript": "^3.7.3"
+    },
+    "dependencies": {
+        "@maxtan/tohtml": "^1.0.1"
     }
 }
