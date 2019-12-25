@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * @Author: MaxTan
  * @Description: 命令行工具
@@ -7,8 +8,8 @@ import program from 'commander';
 import { docxtohtml } from './main';
 import path from 'path';
 program.option('[filePath] [targetPath]').action(function(cmd, env) {
-    if (env.length >= 1) {
-        const targetPath = path.resolve(__dirname, env[0]);
+    if (env && env.length >= 1) {
+        const targetPath = path.resolve(env[0]);
         docxtohtml({
             targetPath: targetPath,
         });

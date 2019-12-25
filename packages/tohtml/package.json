@@ -1,14 +1,15 @@
 {
-    "name": "wonders-tohtml",
+    "name": "@maxtan/tohtml",
     "version": "1.0.0",
-    "description": "",
+    "description": "tohtml",
     "main": "dist/main.js",
     "scripts": {
-        "build": "rimraf dist  && tsc",
-        "tsc-dev": "tsc -W"
+        "tsc-dev": "tsc"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "tohtml"
+    ],
+    "author": "MaxTan <maxtan330@163.com>",
     "license": "ISC",
     "devDependencies": {
         "@types/adm-zip": "^0.4.32",
@@ -17,7 +18,7 @@
         "rimraf": "^3.0.0"
     },
     "bin": {
-        "tohtml": "dist/cli.js"
+        "tohtml": "lib/cli.js"
     },
     "dependencies": {
         "adm-zip": "^0.4.13",

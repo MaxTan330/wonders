@@ -1,14 +1,13 @@
 /**
- *  @des wonder-tohtml入口文件
+ *  @des 文档转换成html
  *  @author MaxTan
  *  @date 2019/12/20
  */
 import * as path from 'path';
 import _ from 'lodash';
 import { docxParser } from './parser';
-import { readFile, writeFile, isDirectory, mkdir } from './utils';
-const buildPath = path.resolve(__dirname, '../build/');
-const assetsPath = path.join(__dirname, '../assets/');
+import { readFile, writeFile } from './utils';
+const assetsPath = path.join(__dirname, './assets/');
 interface WorkOptions {
     targetPath: string; //源文件路径
     templatePath?: string; //模板路径
@@ -28,11 +27,11 @@ const docxtohtml = async (options: WorkOptions) => {
     const compiled = _.template(htmlTemp);
     //编译模板数据
     const htmlStr = compiled({ items });
-    const buildFlag = await isDirectory(buildPath);
-    const writePath = path.join(buildPath, 'index.html');
-    const status = !buildFlag && (await mkdir(buildPath));
-    if (status && defaultOptions.isWirteFile) {
+    const writePath = path.resolve('index.html');
+    if (defaultOptions.isWirteFile) {
         writeFile(writePath, htmlStr);
+    } else {
+        return { htmlStr };
     }
 };
 export { docxtohtml };
