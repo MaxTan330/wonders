@@ -2,10 +2,11 @@
     "name": "@maxtan/tohtml",
     "version": "1.0.0",
     "description": "tohtml",
-    "main": "dist/main.js",
+    "main": "lib/main.js",
     "scripts": {
         "tsc-dev": "tsc"
     },
+    "repository": "https://github.com/MaxTan330/wonders/tree/master/packages/tohtml",
     "keywords": [
         "tohtml"
     ],
@@ -24,5 +25,8 @@
         "adm-zip": "^0.4.13",
         "commander": "^4.0.1",
         "lodash": "^4.17.15"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
