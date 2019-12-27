@@ -2,11 +2,15 @@
     "name": "@maxtan/iconfont",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "lib/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "svgicons2svgfont": "^9.1.1",
+        "webfonts-generator": "^0.4.0"
+    }
 }

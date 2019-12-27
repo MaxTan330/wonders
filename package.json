@@ -29,10 +29,11 @@
         "gulp": "^4.0.2",
         "gulp-clean": "^0.4.0",
         "gulp-typescript": "^6.0.0-alpha.1",
+        "gulp-watch": "^5.0.1",
         "lerna": "^3.19.0",
         "typescript": "^3.7.3"
     },
     "dependencies": {
-        "@maxtan/tohtml": "^1.0.1"
+        "@maxtan/tohtml": "^0.0.1"
     }
 }
