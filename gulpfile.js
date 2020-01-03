@@ -41,7 +41,7 @@ const tsIconfontTask = () => {
 };
 const IconfontTask = series(copyIconfont, tsIconfontTask);
 const watchBuild = () => {
-    return gulpWatch(`${iconfontConf.projectPath}/src/**/*.ts`, IconfontTask);
+    return gulpWatch(`${iconfontConf.projectPath}/src/**/*`, IconfontTask);
 };
 const tohtmlTask = series(cleanTohtmlLib, tsTohtmlTask, copyTohtml);
 exports.default = series(cleanIconfontLib, IconfontTask, watchBuild);

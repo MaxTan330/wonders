@@ -5,17 +5,20 @@
  */
 // const SVGIcons2SVGFontStream = require('svgicons2svgfont');
 const webfontsGenerator = require('webfonts-generator');
-import fs from 'fs';
+// import { generateFonts } from './generate';
+// import path from 'path';
 webfontsGenerator(
     {
-        files: ['./lib/assets/svgs/test.svg'],
-        dest: 'dest/'
+        files: ['./lib/assets/svgs/test.svg','./lib/assets/svgs/history.svg','./lib/assets/svgs/eye_protection.svg','./lib/assets/svgs/nickname.svg'],
+        dest: 'dest',
+        cssTemplate: './lib/assets/template/css.hbs',
+        types: ['eot', 'woff2', 'woff', 'ttf', 'svg'],
+        html: true,
+        htmlTemplate: './lib/assets/template/html2.hbs'
     },
-    function(error: any) {
-        if (error) {
-            console.log('Fail!', error);
-        } else {
-            console.log('Done!');
+    function(err: any,result: any) {
+        if (err) {
+            console.log(err);
         }
     }
 );
