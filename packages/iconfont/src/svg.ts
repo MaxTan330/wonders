@@ -8,6 +8,7 @@ const svg2ttf = require('svg2ttf');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 const ttf2eot = require('ttf2eot');
+const svgstore = require('svgstore');
 import _ from 'lodash';
 import * as utils from './utils';
 import fs from 'fs';
@@ -37,6 +38,25 @@ export class Iconfont {
     constructor() {
         this.init();
     }
+
+    /**
+     * svg转换成svg Symbols
+     * @param files 文件集合
+     * @param writePath 写入的文件地址
+     */
+    private svgtoSymbols(files: Array<string>, writePath: string): void {
+        const sprites = svgstore({ inline: true, cleanDefs: true });
+        files.forEach(item => {
+            const fileName = path.basename(item, path.extname(item));
+            sprites.add(fileName, fs.readFileSync(item, 'utf8'));
+        });
+        console.log(sprites.toString({renameDefs : true}));
+        fs.writeFileSync(writePath, sprites);
+    }
+    /**
+     * svg装换成fontsvg
+     * @param options 参数
+     */
     private svgtoFontsvg(options: FontSvgOptions): Promise<Array<Fonts>> {
         const writePath = options.writePath;
         const result: Array<Fonts> = [];
@@ -54,7 +74,7 @@ export class Iconfont {
                 options.files.forEach(svgFile => {
                     const fileName = path.basename(svgFile, path.extname(svgFile));
                     const glyph: LooseObject = fs.createReadStream(svgFile);
-                    let ligature = 0xA001;
+                    let ligature = 0xa001;
                     for (let i = 0; i < fileName.length; i++) {
                         ligature += fileName.charCodeAt(i);
                     }
@@ -104,34 +124,47 @@ export class Iconfont {
             const fontSvgOptions: FontSvgOptions = Object.assign(defaultOptions, {
                 writePath: `${basePath}.svg`
             });
+            this.svgtoSymbols(fontSvgOptions.files, `${basePath}-symbols.svg`);
             //转换
             this.svgtoFontsvg(fontSvgOptions).then(async (data: Array<Fonts>) => {
-                const cssTpl = await utils.readFile('./lib/assets/template/css.tpl');
-                const htmlTpl = await utils.readFile('./lib/assets/template/html.tpl');
-                console.log(data);
-                const cssCompiled = _.template(cssTpl);
-                const fontSrc = 'url("iconfont.ttf?78057823c41ae19beb3b8b19635fb5b0") format("truetype")';
-                const cssStr = cssCompiled({ fontName: defaultOptions.fontName,items:data,fontSrc:fontSrc});
-                const htmlCompiled = _.template(htmlTpl);
-                utils.writeFile(`${basePath}.css`, cssStr);
-                const htmlStr = htmlCompiled({ items:data});
-                utils.writeFile(`${basePath}.html`, htmlStr);
-                utils.writeFile(`${destPath}/demo.css`, await utils.readFile('./lib/assets/template/demo.css'));
+                //字体引用地址路径
+                let fontSrc = '';
                 const readPath = fontSvgOptions.writePath;
                 //获取ttf Buffer
                 const ttfBuff = this.fontsvgtoTtf(readPath);
                 if (_.includes(defaultOptions.types, 'ttf')) {
+                    const ttfUrl = `url("${defaultOptions.fontName}.ttf") format("truetype")`;
+                    fontSrc += fontSrc == '' ? ttfUrl : `,${ttfUrl}`;
                     fs.writeFileSync(`${basePath}.ttf`, this.ttftoWoff(ttfBuff));
                 }
                 if (_.includes(defaultOptions.types, 'eot')) {
+                    const eotUrl = `url("${defaultOptions.fontName}.eot")`;
+                    fontSrc += fontSrc == '' ? eotUrl : `,${eotUrl}`;
                     fs.writeFileSync(`${basePath}.eot`, this.ttftoWoff(ttfBuff));
                 }
                 if (_.includes(defaultOptions.types, 'woff')) {
+                    const woffUrl = `url("${defaultOptions.fontName}.woff") format("woff")`;
+                    fontSrc += fontSrc == '' ? woffUrl : `,${woffUrl}`;
                     fs.writeFileSync(`${basePath}.woff`, this.ttftoWoff(ttfBuff));
                 }
                 if (_.includes(defaultOptions.types, 'woff2')) {
+                    const woff2Url = `url("${defaultOptions.fontName}.woff2") format("woff2")`;
+                    fontSrc += fontSrc == '' ? woff2Url : `,${woff2Url}`;
                     fs.writeFileSync(`${basePath}.woff2`, this.ttftoWoff(ttfBuff));
                 }
+                //读取模板文件
+                const cssTpl = await utils.readFile('./lib/assets/template/css.tpl');
+                const htmlTpl = await utils.readFile('./lib/assets/template/html.tpl');
+                // console.log(data);
+                //编译模板
+                const cssCompiled = _.template(cssTpl);
+                const htmlCompiled = _.template(htmlTpl);
+                const cssStr = cssCompiled({ fontName: defaultOptions.fontName, items: data, fontSrc: fontSrc });
+                const htmlStr = htmlCompiled({ items: data });
+                //写入编译结果
+                utils.writeFile(`${basePath}.css`, cssStr);
+                utils.writeFile(`${basePath}.html`, htmlStr);
+                utils.writeFile(`${destPath}/demo.css`, await utils.readFile('./lib/assets/template/demo.css'));
             });
         } else {
             console.error('文件夹创建失败');
@@ -140,21 +173,35 @@ export class Iconfont {
     /**
      *
      * @param readPath fontsvg文件路径
-     * @param writePath ttf文件路径
      */
     private fontsvgtoTtf(readPath: string): Buffer {
         const ttf = svg2ttf(fs.readFileSync(readPath, 'utf8'), {});
         return Buffer.from(ttf.buffer);
     }
-    private ttftoWoff(ttfBuff: Buffer) {
+
+    /**
+     * ttf字节转woff字节
+     * @param ttfBuff ttf字节
+     */
+    private ttftoWoff(ttfBuff: Buffer): Buffer {
         const font = ttf2woff(new Uint8Array(ttfBuff));
         return Buffer.from(font.buffer);
     }
-    private ttftoWoff2(ttfBuff: Buffer) {
+
+    /**
+     * ttf字节转woff2字节
+     * @param ttfBuff ttf字节
+     */
+    private ttftoWoff2(ttfBuff: Buffer): Buffer {
         const font = ttf2woff2(new Uint8Array(ttfBuff));
         return Buffer.from(font.buffer);
     }
-    private ttftoEot(ttfBuff: Buffer) {
+
+    /**
+     * ttf字节转eot字节
+     * @param ttfBuff ttf字节
+     */
+    private ttftoEot(ttfBuff: Buffer): Buffer {
         const font = ttf2eot(new Uint8Array(ttfBuff));
         return Buffer.from(font.buffer);
     }
