@@ -44,14 +44,26 @@ export class Iconfont {
      * @param files 文件集合
      * @param writePath 写入的文件地址
      */
-    private svgtoSymbols(files: Array<string>, writePath: string): void {
-        const sprites = svgstore({ inline: true, cleanDefs: true });
+    private svgtoSymbols(files: Array<string>): string {
+        const sprites = svgstore({ inline: true,cleanSymbols:true});
         files.forEach(item => {
             const fileName = path.basename(item, path.extname(item));
-            sprites.add(fileName, fs.readFileSync(item, 'utf8'));
+            const fileStr = fs.readFileSync(item, 'utf8');
+            let fileArr = [];
+            if(/\r\n/gi.test(fileStr)){
+                fileArr = fileStr.split(/\r\n/gi);
+            }else{
+                fileArr = fileStr.split(/\n/gi);
+            }
+            let fileContent = '';
+            fileArr.forEach((childItem => {
+                if(childItem){
+                    fileContent += childItem.trim();
+                }
+            }))
+            sprites.add(fileName, fileContent);
         });
-        console.log(sprites.toString({renameDefs : true}));
-        fs.writeFileSync(writePath, sprites);
+        return sprites.toString();
     }
     /**
      * svg装换成fontsvg
@@ -124,7 +136,6 @@ export class Iconfont {
             const fontSvgOptions: FontSvgOptions = Object.assign(defaultOptions, {
                 writePath: `${basePath}.svg`
             });
-            this.svgtoSymbols(fontSvgOptions.files, `${basePath}-symbols.svg`);
             //转换
             this.svgtoFontsvg(fontSvgOptions).then(async (data: Array<Fonts>) => {
                 //字体引用地址路径
@@ -155,15 +166,19 @@ export class Iconfont {
                 //读取模板文件
                 const cssTpl = await utils.readFile('./lib/assets/template/css.tpl');
                 const htmlTpl = await utils.readFile('./lib/assets/template/html.tpl');
-                // console.log(data);
+                const jsTpl = await utils.readFile('./lib/assets/template/js.tpl');
                 //编译模板
                 const cssCompiled = _.template(cssTpl);
                 const htmlCompiled = _.template(htmlTpl);
+                const jsCompiled = _.template(jsTpl);
                 const cssStr = cssCompiled({ fontName: defaultOptions.fontName, items: data, fontSrc: fontSrc });
                 const htmlStr = htmlCompiled({ items: data });
+                const symbols = this.svgtoSymbols(fontSvgOptions.files);
+                const jsStr = jsCompiled({ svgData: symbols });
                 //写入编译结果
                 utils.writeFile(`${basePath}.css`, cssStr);
                 utils.writeFile(`${basePath}.html`, htmlStr);
+                utils.writeFile(`${basePath}.js`, jsStr);
                 utils.writeFile(`${destPath}/demo.css`, await utils.readFile('./lib/assets/template/demo.css'));
             });
         } else {

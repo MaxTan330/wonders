@@ -112,7 +112,7 @@
   line-height: 1.2;
 }
 
-.icon_lists .icon {
+.icon_lists .iconfont {
   display: block;
   height: 100px;
   line-height: 100px;
@@ -124,7 +124,7 @@
   transition: font-size 0.25s linear, width 0.25s linear;
 }
 
-.icon_lists .icon:hover {
+.icon_lists .iconfont:hover {
   font-size: 100px;
 }
 

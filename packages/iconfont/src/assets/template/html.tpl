@@ -68,37 +68,15 @@
             </div>
             <div class="content symbol">
                 <ul class="icon_lists dib-box">
+                    <% _.each(items, function(items) { %>
                     <li class="dib">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-history"></use>
+                        <svg class="iconfont svg-icon" aria-hidden="true">
+                            <use xlink:href="#<%= items.name %>"></use>
                         </svg>
-                        <div class="name">history</div>
-                        <div class="code-name">#icon-history</div>
+                        <div class="name"><%= items.name %></div>
+                        <div class="code-name"><%= items.name %></div>
                     </li>
-
-                    <li class="dib">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-eye_protection"></use>
-                        </svg>
-                        <div class="name">eye_protection</div>
-                        <div class="code-name">#icon-eye_protection</div>
-                    </li>
-
-                    <li class="dib">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-nickname"></use>
-                        </svg>
-                        <div class="name">nickname</div>
-                        <div class="code-name">#icon-nickname</div>
-                    </li>
-
-                    <li class="dib">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-d-printer"></use>
-                        </svg>
-                        <div class="name">3d-printer</div>
-                        <div class="code-name">#icon-d-printer</div>
-                    </li>
+                    <% }) %>
                 </ul>
                 <div class="article markdown">
                     <h2 id="symbol-">Symbol 引用</h2>
