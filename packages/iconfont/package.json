@@ -11,12 +11,14 @@
     "license": "ISC",
     "dependencies": {
         "loadsh": "^0.0.4",
+        "svg-sprite": "^1.5.0",
         "svg2ttf": "^4.3.0",
         "svgicons2svgfont": "^9.1.1",
-        "svgstore": "^3.0.0-2",
         "ttf2eot": "^2.0.0",
         "ttf2woff": "^2.0.1",
-        "ttf2woff2": "^3.0.0",
-        "xml-js": "^1.6.11"
+        "ttf2woff2": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/svg-sprite": "^0.0.32"
     }
 }

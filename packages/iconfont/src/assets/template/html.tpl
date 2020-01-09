@@ -31,10 +31,7 @@
                     <% _.each(items, function(items) { %>
                     <li class="dib">
                         <div class="iconfont <%= items.name %>"></div>
-                        <div class="name">
-                            <%= items.name %>
-                        </div>
-                        <div class="code-name">.<%= items.name %></div>
+                        <div class="code-name"><%= items.name %></div>
                     </li>
                     <% }) %>
                 </ul>
@@ -73,7 +70,6 @@
                         <svg class="iconfont svg-icon" aria-hidden="true">
                             <use xlink:href="#<%= items.name %>"></use>
                         </svg>
-                        <div class="name"><%= items.name %></div>
                         <div class="code-name"><%= items.name %></div>
                     </li>
                     <% }) %>
