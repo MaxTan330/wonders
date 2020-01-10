@@ -1,15 +1,21 @@
 {
     "name": "@maxtan/iconfont",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "iconfont",
+        "svg",
+        "svgfont"
+    ],
+    "repository": "https://github.com/MaxTan330/wonders/tree/master/packages/iconfont",
+    "author": "MaxTan <maxtan330@163.com>",
     "license": "ISC",
     "dependencies": {
+        "commander": "^4.1.0",
         "loadsh": "^0.0.4",
         "svg-sprite": "^1.5.0",
         "svg2ttf": "^4.3.0",
@@ -18,6 +24,15 @@
         "ttf2woff": "^2.0.1",
         "ttf2woff2": "^3.0.0"
     },
+    "bin": {
+        "iconfont": "lib/cli.js"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "lib"
+    ],
     "devDependencies": {
         "@types/svg-sprite": "^0.0.32"
     }
