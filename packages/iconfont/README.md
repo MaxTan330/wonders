@@ -1,4 +1,4 @@
-# @maxtan/tohtml
+# @maxtan/iconfont
 
 ## Install
 

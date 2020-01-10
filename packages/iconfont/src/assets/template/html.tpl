@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>IconFont Demo</title>
+    <title><%= fontName %></title>
     <link rel="shortcut icon" href="https://gtms04.alicdn.com/tps/i4/TB1_oz6GVXXXXaFXpXXJDFnIXXX-64-64.ico"
         type="image/x-icon" />
     <link rel="stylesheet" href="https://g.alicdn.com/thx/cube/1.3.2/cube.min.css" />
@@ -30,8 +30,8 @@
                 <ul class="icon_lists dib-box">
                     <% _.each(items, function(items) { %>
                     <li class="dib">
-                        <div class="iconfont <%= items.name %>"></div>
-                        <div class="code-name"><%= items.name %></div>
+                        <div class="iconfont <%= fontName %>-<%= items.name %>"></div>
+                        <div class="code-name"><%= fontName %>-<%= items.name %></div>
                     </li>
                     <% }) %>
                 </ul>
@@ -68,9 +68,9 @@
                     <% _.each(items, function(items) { %>
                     <li class="dib">
                         <svg class="iconfont svg-icon" aria-hidden="true">
-                            <use xlink:href="#<%= items.name %>"></use>
+                            <use xlink:href="#<%= fontName %>-<%= items.name %>"></use>
                         </svg>
-                        <div class="code-name"><%= items.name %></div>
+                        <div class="code-name"><%= fontName %>-<%= items.name %></div>
                     </li>
                     <% }) %>
                 </ul>

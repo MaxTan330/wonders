@@ -10,7 +10,7 @@
 	vertical-align: top;
 }
 <% _.each(items, function(items) { %>
-.<%= items.name %>:before {
+.<%- fontName %>-<%= items.name %>:before {
     content : '\<%= items.unicode %>'
 }
 <% }) %>

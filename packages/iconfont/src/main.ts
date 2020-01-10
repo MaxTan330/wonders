@@ -35,6 +35,10 @@ type Fonts = {
     unicode: string;
 };
 export class Iconfont {
+    private fontName: string;
+    constructor() {
+        this.fontName = '';
+    }
     /**
      * svg转换成svg Symbols
      * @param files 文件集合
@@ -52,7 +56,7 @@ export class Iconfont {
                 id: {
                     generator: (name: any) => {
                         const id = path.basename(name, path.extname(name));
-                        return id;
+                        return `${this.fontName}-${id}`;
                     }
                 }
             }
@@ -152,13 +156,12 @@ export class Iconfont {
         //svgfont参数
         const fontSvgOptions: IconfontOptions = Object.assign(defaultOptions, options);
         const destPath = path.join(fontSvgOptions.dest);
+        this.fontName = fontSvgOptions.fontName || '';
         //递归读取文件夹下的的文件
         if (fontSvgOptions.filesDest) {
             if (utils.isDirectory(fontSvgOptions.filesDest)) {
                 fontSvgOptions.files = [];
                 const svgFiles = utils.readDirFiles(fontSvgOptions.filesDest);
-                console.log(svgFiles);
-                console.log(fontSvgOptions.filesDest);
                 svgFiles.forEach(item => {
                     //只处理svg文件
                     if (path.extname(item) == '.svg') {
@@ -217,14 +220,13 @@ export class Iconfont {
                     items: fontSvgs.fontData,
                     fontSrc: fontSrc
                 });
-                const htmlStr = htmlCompiled({ items: fontSvgs.fontData });
+                const htmlStr = htmlCompiled({ items: fontSvgs.fontData, fontName: fontSvgOptions.fontName });
                 const jsStr = jsCompiled({ svgData: symbols });
                 //写入编译结果
                 utils.writeFile(`${basePath}.css`, cssStr);
                 utils.writeFile(`${basePath}.html`, htmlStr);
                 utils.writeFile(`${basePath}.js`, jsStr);
                 const demoCssPath = path.join(__dirname, './assets/template/demo.css');
-                console.log(demoCssPath);
                 utils.writeFile(`${destPath}/demo.css`, await utils.readFile(demoCssPath));
             } else {
                 console.error('文件夹创建失败');
