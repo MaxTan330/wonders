@@ -1,6 +1,6 @@
 {
     "name": "@maxtan/iconfont",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "",
     "main": "lib/main.js",
     "scripts": {
@@ -16,7 +16,7 @@
     "license": "ISC",
     "dependencies": {
         "commander": "^4.1.0",
-        "loadsh": "^0.0.4",
+        "lodash": "^4.17.15",
         "svg-sprite": "^1.5.0",
         "svg2ttf": "^4.3.0",
         "svgicons2svgfont": "^9.1.1",
