@@ -17,31 +17,44 @@ const iconfontConf = {
     projectPath: './packages/iconfont',
     outPath: './packages/iconfont/lib'
 };
+//清空tohtml的lib目录
 const cleanTohtmlLib = () => {
     return src(tohtmlConf.outPath, { read: false, allowEmpty: true }).pipe(gulpClean({ force: true }));
 };
+//拷贝tohtml的assets文件
 const copyTohtml = () => {
     return src(`${tohtmlConf.projectPath}/src/assets/**/*`).pipe(dest(`${tohtmlConf.outPath}/assets`));
 };
+//编译tohtml 项目ts文件
 const tsTohtmlTask = () => {
     return src(`${tohtmlConf.projectPath}/src/**/*.ts`)
         .pipe(tsProject())
         .pipe(dest(tohtmlConf.outPath));
 };
+//清空iconfont的lib目录
 const cleanIconfontLib = () => {
     return src(iconfontConf.outPath, { read: false, allowEmpty: true }).pipe(gulpClean({ force: true }));
 };
+//拷贝iconfont的assets文件
 const copyIconfont = () => {
     return src(`${iconfontConf.projectPath}/src/assets/**/*`).pipe(dest(`${iconfontConf.outPath}/assets`));
 };
+//编译iconfont 项目ts文件
 const tsIconfontTask = () => {
     return src(`${iconfontConf.projectPath}/src/**/*.ts`)
         .pipe(tsProject())
         .pipe(dest(iconfontConf.outPath));
 };
-const IconfontTask = series(copyIconfont, tsIconfontTask);
-const watchBuild = () => {
-    return gulpWatch(`${iconfontConf.projectPath}/src/**/*`, IconfontTask);
+const IconfontSingleTask = series(copyIconfont, tsIconfontTask);
+const TohtmlSingleTask = series(copyTohtml, tsTohtmlTask);
+//监听tohtml编译任务
+const watchBuildTohtml = () => {
+    return gulpWatch(`${tohtmlConf.projectPath}/src/**/*`, TohtmlSingleTask);
 };
-const tohtmlTask = series(cleanTohtmlLib, tsTohtmlTask, copyTohtml);
-exports.default = series(cleanIconfontLib, IconfontTask, watchBuild);
+//监听iconfont编译任务
+const watchBuildIconfont = () => {
+    return gulpWatch(`${iconfontConf.projectPath}/src/**/*`, IconfontSingleTask);
+};
+const TohtmlTask = series(cleanTohtmlLib, TohtmlSingleTask, watchBuildTohtml);
+const IconfontTask = series(cleanIconfontLib, IconfontSingleTask, watchBuildIconfont);
+exports.default = TohtmlTask;

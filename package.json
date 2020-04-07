@@ -33,7 +33,5 @@
         "lerna": "^3.19.0",
         "typescript": "^3.7.3"
     },
-    "dependencies": {
-        "@maxtan/tohtml": "^0.0.1"
-    }
+    "dependencies": {}
 }
