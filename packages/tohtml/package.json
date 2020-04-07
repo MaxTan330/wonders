@@ -1,6 +1,6 @@
 {
     "name": "@maxtan/tohtml",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "tohtml",
     "main": "lib/main.js",
     "scripts": {
