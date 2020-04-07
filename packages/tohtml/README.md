@@ -4,7 +4,7 @@
 
 Node environment requires more than v10
 
-[Chinese document](https://www.runoob.com/html/html-tutorial.html)
+[Chinese document](https://github.com/MaxTan330/wonders/blob/master/packages/tohtml/README.zh-CN.md)
 
 ## Install as package dependent
 
