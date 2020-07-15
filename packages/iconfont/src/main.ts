@@ -115,7 +115,7 @@ export class Iconfont {
                 files.forEach((svgFile) => {
                     const fileName = path.basename(svgFile, path.extname(svgFile));
                     const glyph: LooseObject = fs.createReadStream(svgFile);
-                    let ligature = 0xa001;
+                    let ligature = 0xc001;
                     for (let i = 0; i < fileName.length; i++) {
                         ligature += fileName.charCodeAt(i);
                     }
@@ -186,20 +186,17 @@ export class Iconfont {
                 //svg转换成fontSvg
                 const fontSvgs = await this.svgtoFontsvg(fontSvgOptions.files);
                 //svg转换成symbols
-                const symbols = await this.svgtoSymbols(fontSvgOptions.files);
+                let symbols = await this.svgtoSymbols(fontSvgOptions.files);
+                symbols = symbols.toString().replace(/fill="(#\d{3}|\d{6})|none"/g, '');
                 //字体引用地址路径
                 let fontSrc = '';
                 //获取svg Buffer
                 const ttfBuff = this.fontsvgtoTtf(fontSvgs.buffers);
                 //buffer转换
-                if (_.includes(fontSvgOptions.types, 'ttf')) {
-                    const ttfUrl = `url("${fontSvgOptions.fontName}.ttf") format("truetype")`;
-                    fontSrc += fontSrc == '' ? ttfUrl : `,${ttfUrl}`;
-                    fs.writeFileSync(`${basePath}.ttf`, this.ttftoWoff(ttfBuff));
-                }
                 if (_.includes(fontSvgOptions.types, 'eot')) {
-                    const eotUrl = `url("${fontSvgOptions.fontName}.eot")`;
-                    fontSrc += fontSrc == '' ? eotUrl : `,${eotUrl}`;
+                    fontSrc = `src:url("${fontSvgOptions.fontName}.eot");\n`;
+                    const eotUrl = `\tsrc:url("${fontSvgOptions.fontName}.eot?#iefix") format("embedded-opentype")`;
+                    fontSrc += eotUrl;
                     fs.writeFileSync(`${basePath}.eot`, this.ttftoEot(ttfBuff));
                 }
                 if (_.includes(fontSvgOptions.types, 'woff')) {
@@ -207,10 +204,20 @@ export class Iconfont {
                     fontSrc += fontSrc == '' ? woffUrl : `,${woffUrl}`;
                     fs.writeFileSync(`${basePath}.woff`, this.ttftoWoff(ttfBuff));
                 }
+                if (_.includes(fontSvgOptions.types, 'ttf')) {
+                    const ttfUrl = `url("${fontSvgOptions.fontName}.ttf") format("truetype")`;
+                    fontSrc += fontSrc == '' ? ttfUrl : `,${ttfUrl}`;
+                    fs.writeFileSync(`${basePath}.ttf`, this.ttftoWoff(ttfBuff));
+                }
                 if (_.includes(fontSvgOptions.types, 'woff2')) {
                     const woff2Url = `url("${fontSvgOptions.fontName}.woff2") format("woff2")`;
                     fontSrc += fontSrc == '' ? woff2Url : `,${woff2Url}`;
                     fs.writeFileSync(`${basePath}.woff2`, this.ttftoWoff2(ttfBuff));
+                }
+                if (_.includes(fontSvgOptions.types, 'svg')) {
+                    const svgUrl = `url("${fontSvgOptions.fontName}.svg#${fontSvgOptions.fontName}")`;
+                    fontSrc += fontSrc == '' ? svgUrl : `,${svgUrl}`;
+                    fs.writeFileSync(`${basePath}.svg`, fontSvgs.buffers);
                 }
                 //读取模板文件
                 const cssTpl = fontSvgOptions.cssTpl && (await utils.readFile(fontSvgOptions.cssTpl));

@@ -1,6 +1,6 @@
 @font-face {
 	font-family: '<%= fontName %>';
-	src: <%= fontSrc %>;
+	<%= fontSrc %>;
 }
 .<%- fontName %>{
 	font-family: '<%= fontName %>' !important;
