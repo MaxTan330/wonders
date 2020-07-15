@@ -11,11 +11,11 @@ const tsProject = ts.createProject('tsconfig.json');
 const gulpClean = require('gulp-clean');
 const tohtmlConf = {
     projectPath: './packages/tohtml',
-    outPath: './packages/tohtml/lib'
+    outPath: './packages/tohtml/lib',
 };
 const iconfontConf = {
     projectPath: './packages/iconfont',
-    outPath: './packages/iconfont/lib'
+    outPath: './packages/iconfont/lib',
 };
 //清空tohtml的lib目录
 const cleanTohtmlLib = () => {
@@ -27,9 +27,7 @@ const copyTohtml = () => {
 };
 //编译tohtml 项目ts文件
 const tsTohtmlTask = () => {
-    return src(`${tohtmlConf.projectPath}/src/**/*.ts`)
-        .pipe(tsProject())
-        .pipe(dest(tohtmlConf.outPath));
+    return src(`${tohtmlConf.projectPath}/src/**/*.ts`).pipe(tsProject()).pipe(dest(tohtmlConf.outPath));
 };
 //清空iconfont的lib目录
 const cleanIconfontLib = () => {
@@ -41,9 +39,7 @@ const copyIconfont = () => {
 };
 //编译iconfont 项目ts文件
 const tsIconfontTask = () => {
-    return src(`${iconfontConf.projectPath}/src/**/*.ts`)
-        .pipe(tsProject())
-        .pipe(dest(iconfontConf.outPath));
+    return src(`${iconfontConf.projectPath}/src/**/*.ts`).pipe(tsProject()).pipe(dest(iconfontConf.outPath));
 };
 const IconfontSingleTask = series(copyIconfont, tsIconfontTask);
 const TohtmlSingleTask = series(copyTohtml, tsTohtmlTask);
@@ -55,6 +51,16 @@ const watchBuildTohtml = () => {
 const watchBuildIconfont = () => {
     return gulpWatch(`${iconfontConf.projectPath}/src/**/*`, IconfontSingleTask);
 };
-const TohtmlTask = series(cleanTohtmlLib, TohtmlSingleTask, watchBuildTohtml);
-const IconfontTask = series(cleanIconfontLib, IconfontSingleTask, watchBuildIconfont);
-exports.default = TohtmlTask;
+//tohtml 开发任务
+const tohtmlDev = series(cleanTohtmlLib, TohtmlSingleTask, watchBuildTohtml);
+//iconfont 开发任务
+const iconfontDev = series(cleanIconfontLib, IconfontSingleTask, watchBuildIconfont);
+//tohtml 构建任务
+const tohtmlBuild = series(cleanTohtmlLib, TohtmlSingleTask);
+//iconfont 构建任务
+const iconfontBuild = series(cleanIconfontLib, IconfontSingleTask);
+
+exports.tohtmlDev = tohtmlDev;
+exports.iconfontDev = iconfontDev;
+exports.tohtmlBuild = tohtmlBuild;
+exports.iconfontBuild = iconfontBuild;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="1000px" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>down</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M542.271384,805.29935 L753.589486,593.981249 C770.229037,577.341698 797.20708,577.341698 813.846632,593.981249 C830.486183,610.6208 830.486183,637.598844 813.846632,654.238395 L539.834578,928.250449 C517.64851,950.436517 481.677786,950.436517 459.491717,928.250449 L185.479664,654.238395 C168.840112,637.598844 168.840112,610.6208 185.479664,593.981249 C202.119215,577.341698 229.097258,577.341698 245.73681,593.981249 L457.054911,805.29935 L457.054911,98.6082367 C457.054911,75.0763573 476.131268,56 499.663148,56 C523.195027,56 542.271384,75.0763573 542.271384,98.6082367 L542.271384,805.29935 Z" id="path-1"></path>
+    </defs>
+    <g id="icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="down">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="形状结合" fill="#323233" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

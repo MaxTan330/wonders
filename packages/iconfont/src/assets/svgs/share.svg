@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="1000px" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>share</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M577.281091,140.476711 C577.281091,117.842966 590.490967,112.122802 607.095905,128.007575 L931.54035,438.624859 C948.001255,454.406752 948.124712,479.941731 931.848992,495.661896 L606.787263,809.406751 C590.490967,825.126916 577.281091,819.324447 577.281091,796.855311 L577.281091,632.760661 C101.54035,632.760661 56,881.361484 56,881.361484 C56,881.361484 48.659692,379.406751 577.281091,304.591936 L577.281091,140.476711 Z" id="path-1"></path>
+    </defs>
+    <g id="icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="share">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="02_Mobile/02_Operable/15_share" fill="#323233" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

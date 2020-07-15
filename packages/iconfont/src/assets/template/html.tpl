@@ -7,9 +7,9 @@
     <link rel="shortcut icon" href="https://gtms04.alicdn.com/tps/i4/TB1_oz6GVXXXXaFXpXXJDFnIXXX-64-64.ico"
         type="image/x-icon" />
     <link rel="stylesheet" href="https://g.alicdn.com/thx/cube/1.3.2/cube.min.css" />
-    <link rel="stylesheet" href="demo.css" />
-    <link rel="stylesheet" href="iconfont.css" />
-    <script src="iconfont.js"></script>
+    <link rel="stylesheet" href="<%= fontName %>demo.css" />
+    <link rel="stylesheet" href="<%= fontName %>.css" />
+    <script src="<%= fontName %>.js"></script>
     <!-- jQuery -->
     <script src="https://a1.alicdn.com/oss/uploads/2018/12/26/7bfddb60-08e8-11e9-9b04-53e73bb6408b.js"></script>
     <!-- 代码高亮 -->
@@ -30,7 +30,7 @@
                 <ul class="icon_lists dib-box">
                     <% _.each(items, function(items) { %>
                     <li class="dib">
-                        <div class="iconfont <%= fontName %>-<%= items.name %>"></div>
+                        <div class="<%= fontName %> <%= fontName %>-<%= items.name %>"></div>
                         <div class="code-name"><%= fontName %>-<%= items.name %></div>
                     </li>
                     <% }) %>
@@ -53,13 +53,13 @@
                     </ul>
                     <p>使用步骤如下：</p>
                     <h3 id="-fontclass-">第一步：引入项目下面生成的 fontclass 代码：</h3>
-                    <pre><code class="language-html">&lt;link rel="stylesheet" href="./iconfont.css"&gt;
+                    <pre><code class="language-html">&lt;link rel="stylesheet" href="./<%= fontName %>.css"&gt;
 </code></pre>
                     <h3 id="-">第二步：挑选相应图标并获取类名，应用于页面：</h3>
-                    <pre><code class="language-html">&lt;span class="iconfont icon-xxx"&gt;&lt;/span&gt;
+                    <pre><code class="language-html">&lt;span class="<%= fontName %> <%= fontName %>-xxx"&gt;&lt;/span&gt;
 </code></pre>
                     <blockquote>
-                        <p>" iconfont" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
+                        <p>" <%= fontName %>" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
                     </blockquote>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <ul class="icon_lists dib-box">
                     <% _.each(items, function(items) { %>
                     <li class="dib">
-                        <svg class="iconfont svg-icon" aria-hidden="true">
+                        <svg class="<%= fontName %> svg-icon" aria-hidden="true">
                             <use xlink:href="#<%= fontName %>-<%= items.name %>"></use>
                         </svg>
                         <div class="code-name"><%= fontName %>-<%= items.name %></div>
@@ -93,11 +93,11 @@
                     </ul>
                     <p>使用步骤如下：</p>
                     <h3 id="-symbol-">第一步：引入项目下面生成的 symbol 代码：</h3>
-                    <pre><code class="language-html">&lt;script src="./iconfont.js"&gt;&lt;/script&gt;
+                    <pre><code class="language-html">&lt;script src="./<%= fontName %>.js"&gt;&lt;/script&gt;
 </code></pre>
                     <h3 id="-css-">第二步：加入通用 CSS 代码（引入一次就行）：</h3>
                     <pre><code class="language-html">&lt;style&gt;
-.icon {
+.<%= fontName %> {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;
@@ -108,7 +108,7 @@
 </code></pre>
                     <h3 id="-">第三步：挑选相应图标并获取类名，应用于页面：</h3>
                     <pre><code class="language-html">&lt;svg class="icon" aria-hidden="true"&gt;
-  &lt;use xlink:href="#icon-xxx"&gt;&lt;/use&gt;
+  &lt;use xlink:href="#<%= fontName %>-xxx"&gt;&lt;/use&gt;
 &lt;/svg&gt;
 </code></pre>
                 </div>

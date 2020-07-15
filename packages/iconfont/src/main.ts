@@ -13,31 +13,32 @@ import _ from 'lodash';
 import * as utils from './utils';
 import fs from 'fs';
 import path from 'path';
-const fontStream = new SVGIcons2SVGFontStream({
-    fontName: 'iconfont'
-});
 type LooseObject = {
     [key: string]: any;
 };
-export interface IconfontOptions {
+const assetsPath = path.join(__dirname, './assets/');
+export type IconfontOptions = {
     files?: Array<string>;
-    filesDest: string;
-    dest: string;
+    filesDest?: string | undefined;
+    dest?: string;
     fontName?: string;
     types?: Array<'eot' | 'woff2' | 'woff' | 'ttf' | 'svg'>;
     cssTpl?: string;
     jsTpl?: string;
+    demoCssTpl?: string;
     htmlTpl?: string;
     writeFiles?: boolean;
-}
+};
 type Fonts = {
     name: string;
     unicode: string;
 };
 export class Iconfont {
     private fontName: string;
+    private fontStream: any;
     constructor() {
         this.fontName = '';
+        this.fontStream = null;
     }
     /**
      * svg转换成svg Symbols
@@ -46,25 +47,25 @@ export class Iconfont {
     public async svgtoSymbols(files: Array<string>): Promise<string> {
         const spriterConfig = {
             mode: {
-                symbol: true
+                symbol: true,
             },
             svg: {
                 doctypeDeclaration: false,
-                xmlDeclaration: false
+                xmlDeclaration: false,
             },
             shape: {
                 id: {
                     generator: (name: any) => {
                         const id = path.basename(name, path.extname(name));
                         return `${this.fontName}-${id}`;
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
         return new Promise((resolve, reject) => {
             if (files && files.length) {
                 const spriter = new SVGSpriter(spriterConfig);
-                files.forEach(svgFile => {
+                files.forEach((svgFile) => {
                     //添加编译文件
                     spriter.add(path.resolve(svgFile), '', fs.readFileSync(svgFile, { encoding: 'utf-8' }));
                 });
@@ -95,20 +96,23 @@ export class Iconfont {
      */
     public svgtoFontsvg(files: Array<string>): Promise<{ fontData: Array<Fonts>; buffers: Buffer }> {
         const result: Array<Fonts> = [];
+        const fontStream = new SVGIcons2SVGFontStream({
+            fontName: this.fontName,
+        });
         return new Promise((resolve, reject) => {
             const buffers: Array<Buffer> = [];
             fontStream
                 .on('finish', () => {
                     resolve({
                         fontData: result,
-                        buffers: Buffer.concat(buffers)
+                        buffers: Buffer.concat(buffers),
                     });
                 })
                 .on('error', (err: any) => {
                     reject(err);
                 });
             if (files && files.length) {
-                files.forEach(svgFile => {
+                files.forEach((svgFile) => {
                     const fileName = path.basename(svgFile, path.extname(svgFile));
                     const glyph: LooseObject = fs.createReadStream(svgFile);
                     let ligature = 0xa001;
@@ -117,13 +121,11 @@ export class Iconfont {
                     }
                     glyph.metadata = {
                         unicode: [String.fromCharCode(ligature)],
-                        name: fileName
+                        name: fileName,
                     };
                     result.push({
                         name: fileName,
-                        unicode: Number(ligature)
-                            .toString(16)
-                            .toLocaleUpperCase()
+                        unicode: Number(ligature).toString(16).toLocaleUpperCase(),
                     });
                     fontStream.write(glyph);
                 });
@@ -142,30 +144,33 @@ export class Iconfont {
      * 初始化函数
      */
     public async init(options: IconfontOptions): Promise<void> {
+        const defaultName = 'iconfont';
         const defaultOptions: IconfontOptions = {
-            types: ['eot', 'woff2', 'woff', 'ttf', 'svg'],
-            dest: path.join(__dirname, './'),
-            fontName: 'iconfont',
-            writeFiles: true,
-            filesDest: path.join(__dirname, './'),
-            files: [],
-            cssTpl: path.join(__dirname, './assets/template/css.tpl'),
-            jsTpl: path.join(__dirname, './assets/template/js.tpl'),
-            htmlTpl: path.join(__dirname, './assets/template/html.tpl')
+            types: ['eot', 'woff2', 'woff', 'ttf', 'svg'], //编译字体类型
+            dest: path.join(__dirname, './dist'), //文件输出目录
+            fontName: defaultName, //字体名称
+            writeFiles: true, //是否写入文件
+            filesDest: path.join(__dirname, './'), //源文件目录
+            files: [], //单个文件
+            cssTpl: path.join(assetsPath, '/template/css.tpl'), // css生成模板目录
+            jsTpl: path.join(assetsPath, './template/js.tpl'), // js生成模板目录
+            demoCssTpl: path.join(assetsPath, './template/demoCss.tpl'), // js生成模板目录
+            htmlTpl: path.join(assetsPath, './template/html.tpl'), //html模板生成目录
         };
         //svgfont参数
         const fontSvgOptions: IconfontOptions = Object.assign(defaultOptions, options);
-        const destPath = path.join(fontSvgOptions.dest);
-        this.fontName = fontSvgOptions.fontName || '';
+        const destPath = path.resolve(fontSvgOptions.dest || './');
+        this.fontName = fontSvgOptions.fontName || defaultName;
         //递归读取文件夹下的的文件
         if (fontSvgOptions.filesDest) {
             if (utils.isDirectory(fontSvgOptions.filesDest)) {
                 fontSvgOptions.files = [];
                 const svgFiles = utils.readDirFiles(fontSvgOptions.filesDest);
-                svgFiles.forEach(item => {
+                svgFiles.forEach((item) => {
                     //只处理svg文件
                     if (path.extname(item) == '.svg') {
-                        fontSvgOptions.files && fontSvgOptions.files.push(path.join(fontSvgOptions.filesDest, item));
+                        const filesDest = path.join(fontSvgOptions.filesDest || './');
+                        fontSvgOptions.files && fontSvgOptions.files.push(path.join(filesDest, item));
                     }
                 });
             }
@@ -211,23 +216,25 @@ export class Iconfont {
                 const cssTpl = fontSvgOptions.cssTpl && (await utils.readFile(fontSvgOptions.cssTpl));
                 const htmlTpl = fontSvgOptions.htmlTpl && (await utils.readFile(fontSvgOptions.htmlTpl));
                 const jsTpl = fontSvgOptions.jsTpl && (await utils.readFile(fontSvgOptions.jsTpl));
+                const demoCssTpl = fontSvgOptions.demoCssTpl && (await utils.readFile(fontSvgOptions.demoCssTpl));
                 //编译模板
                 const cssCompiled = _.template(cssTpl);
                 const htmlCompiled = _.template(htmlTpl);
                 const jsCompiled = _.template(jsTpl);
+                const demoCssCompiled = _.template(demoCssTpl);
                 const cssStr = cssCompiled({
                     fontName: fontSvgOptions.fontName,
                     items: fontSvgs.fontData,
-                    fontSrc: fontSrc
+                    fontSrc: fontSrc,
                 });
                 const htmlStr = htmlCompiled({ items: fontSvgs.fontData, fontName: fontSvgOptions.fontName });
                 const jsStr = jsCompiled({ svgData: symbols });
+                const cssDemoStr = demoCssCompiled({ fontName: fontSvgOptions.fontName });
                 //写入编译结果
                 utils.writeFile(`${basePath}.css`, cssStr);
                 utils.writeFile(`${basePath}.html`, htmlStr);
                 utils.writeFile(`${basePath}.js`, jsStr);
-                const demoCssPath = path.join(__dirname, './assets/template/demo.css');
-                utils.writeFile(`${destPath}/demo.css`, await utils.readFile(demoCssPath));
+                utils.writeFile(`${basePath}demo.css`, cssDemoStr);
             } else {
                 console.error('文件夹创建失败');
             }
