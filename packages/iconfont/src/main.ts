@@ -113,7 +113,7 @@ export class Iconfont {
                 });
             const ligatureList: Array<number> = [];
             let dex = 0;
-            if (files && files.length) {
+            if (files && files.length < 4000) {
                 files.forEach((svgFile) => {
                     const fileName = path.basename(svgFile, path.extname(svgFile));
                     const glyph: LooseObject = fs.createReadStream(svgFile);
@@ -124,7 +124,7 @@ export class Iconfont {
                         ligature += fileName.charCodeAt(i);
                     }
                     ligature += baseLigature;
-                    if (ligatureList.indexOf(ligature) == -1) {
+                    while (ligatureList.indexOf(ligature) != -1) {
                         const lastLigature = 0xefff;
                         ligature = lastLigature - dex;
                         dex++;
@@ -142,7 +142,7 @@ export class Iconfont {
                     fontStream.write(glyph);
                 });
             } else {
-                console.error('没有文件可处理');
+                console.error('没有文件可处理或文件数超过4000');
                 reject();
             }
             fontStream.on('data', (data: Buffer) => {
@@ -206,28 +206,34 @@ export class Iconfont {
                 const ttfBuff = this.fontsvgtoTtf(fontSvgs.buffers);
                 //buffer转换
                 if (_.includes(fontSvgOptions.types, 'eot')) {
-                    fontSrc = `src:url("${fontSvgOptions.fontName}.eot");\n`;
-                    const eotUrl = `\tsrc:url("${fontSvgOptions.fontName}.eot?#iefix") format("embedded-opentype")`;
+                    fontSrc = `src:url("${fontSvgOptions.fontName}.eot?t=${new Date().getTime()}");\n`;
+                    const eotUrl = `\tsrc:url("${
+                        fontSvgOptions.fontName
+                    }.eot?t=${new Date().getTime()}#iefix") format("embedded-opentype")`;
                     fontSrc += eotUrl;
                     fs.writeFileSync(`${basePath}.eot`, this.ttftoEot(ttfBuff));
                 }
                 if (_.includes(fontSvgOptions.types, 'woff')) {
-                    const woffUrl = `url("${fontSvgOptions.fontName}.woff") format("woff")`;
+                    const woffUrl = `url("${fontSvgOptions.fontName}.woff?t=${new Date().getTime()}") format("woff")`;
                     fontSrc += fontSrc == '' ? woffUrl : `,${woffUrl}`;
                     fs.writeFileSync(`${basePath}.woff`, this.ttftoWoff(ttfBuff));
                 }
                 if (_.includes(fontSvgOptions.types, 'ttf')) {
-                    const ttfUrl = `url("${fontSvgOptions.fontName}.ttf") format("truetype")`;
+                    const ttfUrl = `url("${fontSvgOptions.fontName}.ttf?t=${new Date().getTime()}") format("truetype")`;
                     fontSrc += fontSrc == '' ? ttfUrl : `,${ttfUrl}`;
                     fs.writeFileSync(`${basePath}.ttf`, this.ttftoWoff(ttfBuff));
                 }
                 if (_.includes(fontSvgOptions.types, 'woff2')) {
-                    const woff2Url = `url("${fontSvgOptions.fontName}.woff2") format("woff2")`;
+                    const woff2Url = `url("${
+                        fontSvgOptions.fontName
+                    }.woff2?t=${new Date().getTime()}") format("woff2")`;
                     fontSrc += fontSrc == '' ? woff2Url : `,${woff2Url}`;
                     fs.writeFileSync(`${basePath}.woff2`, this.ttftoWoff2(ttfBuff));
                 }
                 if (_.includes(fontSvgOptions.types, 'svg')) {
-                    const svgUrl = `url("${fontSvgOptions.fontName}.svg#${fontSvgOptions.fontName}")`;
+                    const svgUrl = `url("${fontSvgOptions.fontName}.svg?t=${new Date().getTime()}#${
+                        fontSvgOptions.fontName
+                    }")`;
                     fontSrc += fontSrc == '' ? svgUrl : `,${svgUrl}`;
                     fs.writeFileSync(`${basePath}.svg`, fontSvgs.buffers);
                 }
