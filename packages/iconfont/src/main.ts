@@ -111,21 +111,33 @@ export class Iconfont {
                 .on('error', (err: any) => {
                     reject(err);
                 });
+            const ligatureList: Array<number> = [];
+            let dex = 0;
             if (files && files.length) {
                 files.forEach((svgFile) => {
                     const fileName = path.basename(svgFile, path.extname(svgFile));
                     const glyph: LooseObject = fs.createReadStream(svgFile);
-                    let ligature = 0xc001;
+                    const baseLigature = 0xe001;
+                    let ligature = 0;
+                    // 以文件名作为关联
                     for (let i = 0; i < fileName.length; i++) {
                         ligature += fileName.charCodeAt(i);
                     }
+                    ligature += baseLigature;
+                    if (ligatureList.indexOf(ligature) == -1) {
+                        const lastLigature = 0xefff;
+                        ligature = lastLigature - dex;
+                        dex++;
+                    }
+                    ligatureList.push(ligature);
                     glyph.metadata = {
                         unicode: [String.fromCharCode(ligature)],
                         name: fileName,
                     };
+                    const unicodeStr = Number(ligature).toString(16).toLocaleUpperCase();
                     result.push({
                         name: fileName,
-                        unicode: Number(ligature).toString(16).toLocaleUpperCase(),
+                        unicode: unicodeStr,
                     });
                     fontStream.write(glyph);
                 });
