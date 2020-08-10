@@ -8,8 +8,10 @@
         "tohtml": "tohtml ./test.docx",
         "dev:tohtml": "gulp tohtmlDev",
         "dev:iconfont": "gulp iconfontDev",
+        "dev:base64": "gulp base64Dev",
         "build:tohtml": "gulp tohtmlBuild",
-        "build:iconfont": "gulp iconfontBuild"
+        "build:iconfont": "gulp iconfontBuild",
+        "build:base64": "gulp base64Build"
     },
     "repository": {
         "type": "git",

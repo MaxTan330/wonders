@@ -1,0 +1,17 @@
+{
+    "name": "@maxtan/base64",
+    "version": "1.0.0",
+    "description": "",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "MaxTan <maxtan330@163.com>",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "lib"
+    ],
+    "license": "ISC"
+}

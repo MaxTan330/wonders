@@ -17,6 +17,10 @@ const iconfontConf = {
     projectPath: './packages/iconfont',
     outPath: './packages/iconfont/lib',
 };
+const base64Conf = {
+    projectPath: './packages/base64',
+    outPath: './packages/base64/lib',
+};
 //清空tohtml的lib目录
 const cleanTohtmlLib = () => {
     return src(tohtmlConf.outPath, { read: false, allowEmpty: true }).pipe(gulpClean({ force: true }));
@@ -41,8 +45,17 @@ const copyIconfont = () => {
 const tsIconfontTask = () => {
     return src(`${iconfontConf.projectPath}/src/**/*.ts`).pipe(tsProject()).pipe(dest(iconfontConf.outPath));
 };
+//清空base64的lib目录
+const cleanBase64Lib = () => {
+    return src(base64Conf.outPath, { read: false, allowEmpty: true }).pipe(gulpClean({ force: true }));
+};
+//编译iconfont 项目ts文件
+const tsBase64Task = () => {
+    return src(`${base64Conf.projectPath}/src/**/*.ts`).pipe(tsProject()).pipe(dest(base64Conf.outPath));
+};
 const IconfontSingleTask = series(copyIconfont, tsIconfontTask);
 const TohtmlSingleTask = series(copyTohtml, tsTohtmlTask);
+const Base64SingleTask = series(tsBase64Task);
 //监听tohtml编译任务
 const watchBuildTohtml = () => {
     return gulpWatch(`${tohtmlConf.projectPath}/src/**/*`, TohtmlSingleTask);
@@ -51,16 +64,26 @@ const watchBuildTohtml = () => {
 const watchBuildIconfont = () => {
     return gulpWatch(`${iconfontConf.projectPath}/src/**/*`, IconfontSingleTask);
 };
+//监听base64编译任务
+const watchBuildBase64 = () => {
+    return gulpWatch(`${base64Conf.projectPath}/src/**/*`, Base64SingleTask);
+};
 //tohtml 开发任务
 const tohtmlDev = series(cleanTohtmlLib, TohtmlSingleTask, watchBuildTohtml);
 //iconfont 开发任务
 const iconfontDev = series(cleanIconfontLib, IconfontSingleTask, watchBuildIconfont);
+//base64 开发任务
+const base64Dev = series(cleanBase64Lib, Base64SingleTask, watchBuildBase64);
 //tohtml 构建任务
 const tohtmlBuild = series(cleanTohtmlLib, TohtmlSingleTask);
 //iconfont 构建任务
 const iconfontBuild = series(cleanIconfontLib, IconfontSingleTask);
+//base64 构建任务
+const base64Build = series(cleanBase64Lib, Base64SingleTask);
 
 exports.tohtmlDev = tohtmlDev;
 exports.iconfontDev = iconfontDev;
 exports.tohtmlBuild = tohtmlBuild;
 exports.iconfontBuild = iconfontBuild;
+exports.base64Dev = base64Dev;
+exports.base64Build = base64Build;
