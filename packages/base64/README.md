@@ -40,6 +40,9 @@
 
 使用方法
 
+    const base64 = new Base64({
+        urlsafe : false
+    });
     const testStr = '加密串';
     const encodeStr = base64.encode(testStr); // 加密
     const decodeStr = base64.decode(encodeStr); //解密
