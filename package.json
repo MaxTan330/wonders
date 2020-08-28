@@ -9,9 +9,11 @@
         "dev:tohtml": "gulp tohtmlDev",
         "dev:iconfont": "gulp iconfontDev",
         "dev:base64": "gulp base64Dev",
+        "dev:ntsRouterDev": "gulp ntsRouterDev",
         "build:tohtml": "gulp tohtmlBuild",
         "build:iconfont": "gulp iconfontBuild",
-        "build:base64": "gulp base64Build"
+        "build:base64": "gulp base64Build",
+        "build:ntsRouterBuild": "gulp ntsRouterBuild"
     },
     "repository": {
         "type": "git",

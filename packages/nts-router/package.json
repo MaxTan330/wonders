@@ -1,0 +1,31 @@
+{
+    "name": "@maxtan/nts-router",
+    "version": "1.0.1",
+    "description": "nts-router 是基于 Typescript 装饰器和 express。用了简化express 路由和回调操作的",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": "https://github.com/MaxTan330/wonders/tree/master/packages/nts-router",
+    "author": "MaxTan <maxtan330@163.com>",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "lib"
+    ],
+    "keywords": [
+        "nts-router",
+        "express",
+        "router"
+    ],
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "reflect-metadata": "^0.1.13"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.7",
+        "@types/node": "^14.6.1"
+    }
+}
