@@ -11,8 +11,8 @@ export type MiddlewareType = {
     type?: WareType; //0
     name?: string; //中间件名称
     priority: number; //中间件优先级别
-    blackList?: Array<string>; //白名单
-    whiteList?: Array<string>; //黑名单
+    include?: Array<string>; //包含项
+    exclude?: Array<string>; //排除项
 };
 export type MiddlewareList = {
     preMiddlewareList: Array<MiddlewareType>; //前置路由中间件列表
@@ -348,19 +348,19 @@ function getMiddleWareByFilterList(middleList: MiddlewareList, regStr: string): 
     let preMiddlewareList = middleList.preMiddlewareList;
     let afterMiddlewareList = middleList.afterMiddlewareList;
     preMiddlewareList = preMiddlewareList.filter((item) => {
-        if (item.blackList) {
-            return item.blackList.indexOf(regStr) != -1;
-        } else if (item.whiteList) {
-            return item.whiteList.indexOf(regStr) == -1;
+        if (item.include) {
+            return item.include.indexOf(regStr) != -1;
+        } else if (item.exclude) {
+            return item.exclude.indexOf(regStr) == -1;
         } else {
             return true;
         }
     });
     afterMiddlewareList = afterMiddlewareList.filter((item) => {
-        if (item.blackList) {
-            return item.blackList.indexOf(regStr) != -1;
-        } else if (item.whiteList) {
-            return item.whiteList.indexOf(regStr) == -1;
+        if (item.include) {
+            return item.include.indexOf(regStr) != -1;
+        } else if (item.exclude) {
+            return item.exclude.indexOf(regStr) == -1;
         } else {
             return true;
         }
