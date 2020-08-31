@@ -1,7 +1,7 @@
 {
     "name": "@maxtan/tohtml",
-    "version": "1.0.1",
-    "description": "tohtml",
+    "version": "1.0.3",
+    "description": "将 docx 文件快速转换成可维护性高的HTML网页",
     "main": "lib/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
