@@ -40,6 +40,10 @@
 
     iconfont ./svg -o dist -csstpl ./b.tpl
 
+**生成规则**
+
+字符编码起始位`0xe001` 会读取文件命名自动计算，理论上来说，只要保证文件名不变，每次生成的对应字体编码都是一致的
+
 **生成的目录结构**
 
 -   dist
@@ -47,6 +51,7 @@
     -   iconfont.eot -- 需要导入到项目的 eot 文件
     -   iconfont.html -- 预览的网页 方便查询有哪些字体图标，及使用方法
     -   iconfont.js -- 需要导入到项目的 js 文件,用以支持 Symbol 使用
+    -   iconfont.svg -- 需要导入到项目的 svg 文件
     -   iconfont.ttf -- 需要导入到项目的 ttf 文件
     -   iconfont.woff -- 需要导入到项目的 woff 文件
     -   iconfont.woff2 -- 需要导入到项目的 woff2 文件

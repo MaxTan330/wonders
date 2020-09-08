@@ -1,7 +1,7 @@
 {
     "name": "@maxtan/iconfont",
-    "version": "1.0.0",
-    "description": "",
+    "version": "1.0.1",
+    "description": "基于Node环境的字体生成器，可通过命令行将svg文件批量生成字体",
     "main": "lib/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
