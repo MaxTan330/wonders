@@ -1,6 +1,6 @@
 {
     "name": "@maxtan/nts-router",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "nts-router 是基于 Typescript 装饰器和 express。用来简化express 路由和回调操作的",
     "main": "lib/index.js",
     "scripts": {

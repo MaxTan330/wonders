@@ -383,7 +383,7 @@ export function registerRouter(app: Application, routerStore: object, routerMidd
         const middleList: Array<MiddlewareType> = [];
         fnNameArr.forEach((item: string) => {
             const routeMetadata: MiddlewareType = Reflect.getMetadata(MIDDLEMETHOD_METADATA, proto[item]);
-            middleList.push(routeMetadata);
+            routeMetadata && middleList.push(routeMetadata);
         });
         mProto = proto;
         mList = getMiddleWareList(middleList);
