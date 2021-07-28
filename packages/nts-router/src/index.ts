@@ -343,7 +343,10 @@ function getMiddleWareList(middleList: Array<MiddlewareType>): MiddlewareList {
  * 过滤中间件黑白名单
  * @param list
  */
-function getMiddleWareByFilterList(middleList: MiddlewareList, regStr: string): MiddlewareList {
+function getMiddleWareByFilterList(middleList: MiddlewareList, regStr: string): MiddlewareList | undefined {
+    if (!middleList) {
+      return;
+    }
     // 获取前置路由和后置路由
     let preMiddlewareList = middleList.preMiddlewareList;
     let afterMiddlewareList = middleList.afterMiddlewareList;
@@ -403,7 +406,7 @@ export function registerRouter(app: Application, routerStore: object, routerMidd
                 //是否存在路由中间件
                 if (mProto) {
                     //处理前置中间件
-                    if (wareList.preMiddlewareList) {
+                    if (wareList && wareList.preMiddlewareList) {
                         wareList.preMiddlewareList.forEach((preMiddleware) => {
                             if (preMiddleware.name) {
                                 preFn.push(preMiddleWareFactory(routerMiddleware, preMiddleware.name));
@@ -411,7 +414,7 @@ export function registerRouter(app: Application, routerStore: object, routerMidd
                         });
                     }
                     //处理后置中间件
-                    if (wareList.afterMiddlewareList) {
+                    if (wareList && wareList.afterMiddlewareList) {
                         wareList.afterMiddlewareList.forEach((endMiddleware) => {
                             if (endMiddleware.name) {
                                 endFn.push(afterMiddleWareFactory(routerMiddleware, endMiddleware.name));
