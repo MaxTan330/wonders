@@ -1,44 +1,46 @@
 {
-    "name": "wonders",
-    "version": "1.0.1",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "iconfont": "iconfont ./packages/iconfont/src/assets/svgs -n want-icon",
-        "tohtml": "tohtml ./test.docx",
-        "dev:tohtml": "gulp tohtmlDev",
-        "dev:iconfont": "gulp iconfontDev",
-        "dev:base64": "gulp base64Dev",
-        "dev:ntsRouter": "gulp ntsRouterDev",
-        "build:tohtml": "gulp tohtmlBuild",
-        "build:iconfont": "gulp iconfontBuild",
-        "build:base64": "gulp base64Build",
-        "build:ntsRouter": "gulp ntsRouterBuild"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/MaxTan330/wonders.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/MaxTan330/wonders/issues"
-    },
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "homepage": "https://github.com/MaxTan330/wonders#readme",
-    "devDependencies": {
-        "@types/node": "^12.12.21",
-        "@typescript-eslint/eslint-plugin": "^2.12.0",
-        "@typescript-eslint/parser": "^2.12.0",
-        "eslint": "^6.7.2",
-        "gulp": "^4.0.2",
-        "gulp-clean": "^0.4.0",
-        "gulp-typescript": "^6.0.0-alpha.1",
-        "gulp-watch": "^5.0.1",
-        "typescript": "^3.7.3"
-    },
-    "dependencies": {}
+  "name": "wonders",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "iconfont": "iconfont ./packages/iconfont/src/assets/svgs -n want-icon",
+    "tohtml": "tohtml ./test.docx",
+    "dev:tohtml": "gulp tohtmlDev",
+    "dev:iconfont": "gulp iconfontDev",
+    "dev:base64": "gulp base64Dev",
+    "dev:ntsRouter": "gulp ntsRouterDev",
+    "dev:calendarDev": "gulp calendarDev",
+    "build:tohtml": "gulp tohtmlBuild",
+    "build:iconfont": "gulp iconfontBuild",
+    "build:base64": "gulp base64Build",
+    "build:ntsRouter": "gulp ntsRouterBuild",
+    "dev:calendarBuild": "gulp calendarBuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxTan330/wonders.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxTan330/wonders/issues"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "homepage": "https://github.com/MaxTan330/wonders#readme",
+  "devDependencies": {
+    "@types/node": "^12.12.21",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-watch": "^5.0.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
 }
