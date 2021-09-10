@@ -15,7 +15,7 @@
     "build:iconfont": "gulp iconfontBuild",
     "build:base64": "gulp base64Build",
     "build:ntsRouter": "gulp ntsRouterBuild",
-    "dev:calendarBuild": "gulp calendarBuild"
+    "build:calendarBuild": "gulp calendarBuild"
   },
   "repository": {
     "type": "git",

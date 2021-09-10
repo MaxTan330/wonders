@@ -5,7 +5,8 @@
  */
 import { Lunar } from './lunar';
 const lun = new Lunar();
-import fs from 'fs';
-fs.writeFile('./1.json', JSON.stringify(lun.yueLiHTML(2021, 9)), () => {
-  console.log('写入完成');
-});
+console.log(lun.getLunarDate(2021,9,10));
+// import fs from 'fs';
+// fs.writeFile('./1.json', JSON.stringify(lun.yueLiCalc(2021, 9)), () => {
+//   console.log('写入完成');
+// });

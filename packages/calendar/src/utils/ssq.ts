@@ -1,7 +1,7 @@
 /**
  * @Author: MaxTan
- * @Description: 
- * @Date: 2021/09/09 16:21:25 
+ * @Description:
+ * @Date: 2021/09/09 16:21:25
  */
 import { dt_T, int2 } from './base';
 import { J2000, YMC } from './const';
@@ -49,19 +49,34 @@ const QI_S = [
   'AAAAF1iFaAAACpACmFmAAAAAAAACrDaAAADG0',
 ];
 class SSQ {
-  public SB = '';
-  public QB = '';
-  public leap = 0;
-  public ym: any[] = [];
-  public ZQ: number[] = [];
-  public HS: number[] = [];
-  public dx: number[] = [];
-  public Yn = [];
-  public PE1 = 0;
-  public PE2 = 0;
+  private SB = '';
+  private QB = '';
+  private leap = 0;
+  private ym: any[] = [];
+  private ZQ: number[] = [];
+  private HS: number[] = [];
+  private dx: number[] = [];
+  private Yn = [];
+  private PE1 = 0;
+  private PE2 = 0;
   constructor() {
     this.SB = this.jieya(SUO_S.join(''));
     this.QB = this.jieya(QI_S.join(''));
+  }
+  getZQ() {
+    return this.ZQ;
+  }
+  getHS() {
+    return this.HS;
+  }
+  getYm() {
+    return this.ym;
+  }
+  getDx() {
+    return this.dx;
+  }
+  getLeap() {
+    return this.leap;
   }
   soLow(W: number) {
     const v = 7771.37714500204;
@@ -192,7 +207,7 @@ class SSQ {
     }
     const YY = int2((this.ZQ[0] + 10 + 180) / 365.2422) + 2000;
     if (YY >= -721 && YY <= -104) {
-      const ns: any = [];
+      const ns: any[] = [];
       let yy;
       for (i = 0; i < 3; i++) {
         yy = YY + i - 1;
