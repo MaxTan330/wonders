@@ -15,7 +15,7 @@ interface ReadOptions {
  * @param curPath 路径
  * @param options
  */
-const readFile = (curPath: string, options?: ReadOptions): Promise<any> => {
+const readFile = (curPath: string, options?: ReadOptions): Promise<string> => {
     const o = Object.assign({ encoding: 'utf8' }, options);
     return new Promise((resolve, reject) => {
         fs.readFile(curPath, o, (err, data) => {
@@ -96,8 +96,8 @@ const delDirectory = (curPath: string) => {
     }
 };
 
-const readDirFiles = (curPath: string): Array<any> => {
-    const result: Array<any> = [];
+const readDirFiles = (curPath: string): Array<string> => {
+    const result: Array<string> = [];
     if (isDirectory(curPath)) {
         const files = fs.readdirSync(curPath);
         files.forEach(item => {
