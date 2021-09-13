@@ -1,11 +1,24 @@
 {
-  "name": "calendar",
+  "name": "@maxtan/calendar",
   "version": "1.0.0",
-  "description": "日历",
-  "main": "index.js",
+  "description": "日历换算，公历转换成农历，回历，儒略日换算",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": "https://github.com/MaxTan330/wonders/tree/master/packages/calendar",
+  "author": "MaxTan <maxtan330@163.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "农历",
+    "黄历",
+    "回历",
+    "儒略日"
+  ],
   "license": "ISC"
 }
